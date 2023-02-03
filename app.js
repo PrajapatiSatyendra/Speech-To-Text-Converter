@@ -2,6 +2,7 @@ const express=require('express');
 const cors= require('cors');
 const mainRoutes = require('./routes/main');
 const multer = require("multer");
+const path = require('path');
 
 const app=express();
 
@@ -34,6 +35,6 @@ if (process.env.NODE_ENV == 'production') {
         res.sendFile(path.resolve(__dirname, 'client', 'build', 'index.html'));
     })
 }
-app.listen(8000,()=>{
+app.listen(PORT,()=>{
     console.log("listening at port 8000")
 })
