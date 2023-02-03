@@ -32,10 +32,14 @@ const Body = () => {
                 const form = new FormData();
                 form.append('file', blob, "audio.mp3");
                 try {
-                    const result = await fetch(`http://localhost:8000/main/transcriptionAndTranslation`, {
+                    const result = await fetch(
+                      `https://transcript.vercel.app
+/main/transcriptionAndTranslation`,
+                      {
                         method: "post",
-                        body: form
-                    });
+                        body: form,
+                      }
+                    );
                     const jsonData = await result.json();
                     if (!result.ok) {
                         throw new Error(jsonData.message);

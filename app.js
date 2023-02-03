@@ -19,11 +19,11 @@ const fileStorage = multer.diskStorage({
 });
 
 
-const corsOption = {
-    origin: ['http://localhost:8000','http://localhost:3000'],
-    optionsSuccessStatus: 200,
-    methods: "GET,POST,PUT,DELETE"
-} 
+// const corsOption = {
+//     origin: ['https://transcript.vercel.app','https://localhost:3000'],
+//     optionsSuccessStatus: 200,
+//     methods: "GET,POST,PUT,DELETE"
+// } 
 app.use(cors(corsOption));
 app.use(multer({ storage: fileStorage }).single('file'));
 app.use('/main', mainRoutes);
