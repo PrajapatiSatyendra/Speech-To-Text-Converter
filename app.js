@@ -24,7 +24,7 @@ const fileStorage = multer.diskStorage({
 //     optionsSuccessStatus: 200,
 //     methods: "GET,POST,PUT,DELETE"
 // } 
-app.use(cors(corsOption));
+//app.use(cors(corsOption));
 app.use(multer({ storage: fileStorage }).single('file'));
 app.use('/main', mainRoutes);
 
