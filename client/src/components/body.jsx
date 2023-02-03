@@ -33,7 +33,7 @@ const Body = () => {
                 form.append('file', blob, "audio.mp3");
                 try {
                     const result = await fetch(
-                      `https://transcript.vercel.app
+                      `https://transcript.vercel.app:8000
 /main/transcriptionAndTranslation`,
                       {
                         method: "post",
