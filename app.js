@@ -5,7 +5,7 @@ const multer = require("multer");
 const path = require('path');
 
 const app=express();
-
+const PORT = 8000;
 app.use(express.urlencoded({extended:false}));
 app.use(express.json());
 
@@ -35,6 +35,6 @@ if (process.env.NODE_ENV == 'production') {
         res.sendFile(path.resolve(__dirname, 'client', 'build', 'index.html'));
     })
 }
-app.listen(8000,()=>{
-    console.log("listening at port 8000")
+app.listen(PORT,()=>{
+    console.log(`listening at port ${PORT}`)
 })
