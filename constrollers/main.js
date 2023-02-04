@@ -2,6 +2,7 @@ require('dotenv').config();
 const fetch = require('node-fetch');
 const fs = require('fs');
 const { translate } = require("free-translate");
+const path = require("path");
 
 const urlUpload = "https://api.assemblyai.com/v2/upload";
 const urlTranscript = "https://api.assemblyai.com/v2/transcript";
@@ -12,7 +13,7 @@ exports.transcriptionAndTranslation = async (req, res, next) => {
   
     /*----------------------------------------Request for url of audio file from Assembly AI--------------------------------------------------- */
     
-    fs.readFile("audios/audio.mp3", async (err, data) => {
+    fs.readFile(path.join(__dirname,"../","audios","audio.mp3"), async (err, data) => {
       if (err) {
         return console.log(err);
       }
