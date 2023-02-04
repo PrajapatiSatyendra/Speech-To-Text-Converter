@@ -12,8 +12,8 @@ exports.transcriptionAndTranslation = async (req, res, next) => {
   try {
   
     /*----------------------------------------Request for url of audio file from Assembly AI--------------------------------------------------- */
-    
-    fs.readFile(path.join(__dirname,"some","honesty.wav"), async (error, data) => {
+    console.log("yes",req.file.path);
+    fs.readFile(req.file.path, async (error, data) => {
       if (error) {
         return next(error);
       }
@@ -28,8 +28,8 @@ exports.transcriptionAndTranslation = async (req, res, next) => {
 
       const responseUpload = await fetch(urlUpload, paramsUpload);
       const jsonDataUpload = await responseUpload.json();
-      // console.log(`Success: ${jsonDataUpload}`);
-      // console.log(`URL: ${jsonDataUpload["upload_url"]}`);
+      console.log(`Success: ${jsonDataUpload}`);
+      console.log(`URL: ${jsonDataUpload["upload_url"]}`);
 
       /*-----------------------------------Request for transcription from Assembly AI ------------------------------------------------------*/
         
@@ -55,8 +55,8 @@ exports.transcriptionAndTranslation = async (req, res, next) => {
         throw new Error("something went wrong");
       }
       const jsonDataTranscript = await responseTranscript.json();
-      // console.log("Success:", jsonDataTranscript);
-      // console.log("ID:", jsonDataTranscript["id"]);
+      console.log("Success:", jsonDataTranscript);
+      console.log("ID:", jsonDataTranscript["id"]);
 
       /*----------------------------Requesting with download id from Assembly AI---------------------------------------------------------- */
         
@@ -79,10 +79,10 @@ exports.transcriptionAndTranslation = async (req, res, next) => {
       jsonDataDownloadId = await responseDownloadId.json();
       if (jsonDataDownloadId.status === "completed") {
         sourceText = jsonDataDownloadId.text;
-        // console.log(sourceText);
+        console.log(sourceText);
          const translatedText = await translate(sourceText, { to: "hi" });
 
-        //  console.log(translatedText);
+         console.log(translatedText);
          res
            .status(200)
            .json({ sourceText: sourceText, translatedText: translatedText });
@@ -105,7 +105,7 @@ exports.transcriptionAndTranslation = async (req, res, next) => {
                 const translatedText = await translate(sourceText, {
                   to: "hi",
                 });
-                // console.log(x, translatedText);
+                console.log(x, translatedText);
                 res
                   .status(200)
                   .json({

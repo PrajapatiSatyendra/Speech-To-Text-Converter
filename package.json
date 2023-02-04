@@ -1,17 +1,25 @@
 {
-  "name": "server",
+  "name": "speech_to_text",
   "version": "1.0.0",
   "description": "",
-  "main": "index.js",
+  "main": "app.js",
   "scripts": {
-    "start": "node app.js",
-    "test": "echo \"Error: no test specified\" && exit 1"
+    "test": "echo \"Error: no test specified\" && exit 1",
+    "start":"nodemon app.js"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/PrajapatiSatyendra/Speech-To-Text-Converter.git"
   },
   "keywords": [],
   "author": "",
   "license": "ISC",
+  "bugs": {
+    "url": "https://github.com/PrajapatiSatyendra/Speech-To-Text-Converter/issues"
+  },
+  "homepage": "https://github.com/PrajapatiSatyendra/Speech-To-Text-Converter#readme",
   "dependencies": {
-    "@google-cloud/text-to-speech": "^4.0.4",
+    "@google-cloud/text-to-speech": "^4.2.0",
     "cors": "^2.8.5",
     "dotenv": "^16.0.3",
     "express": "^4.18.2",

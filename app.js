@@ -9,24 +9,33 @@ const PORT = 5000;
 app.use(express.urlencoded({extended:false}));
 app.use(express.json());
 
-const fileStorage = multer.diskStorage({
-    destination: (req, file, cb) => {
-        cb(null, 'some');
-    },
-    filename: (req, file, cb) => {
-        cb(null, file.originalname)
-    }
-});
-
 
 // const corsOption = {
-//     origin: ['https://transcript.vercel.app','https://localhost:3000'],
-//     optionsSuccessStatus: 200,
-//     methods: "GET,POST,PUT,DELETE"
-// } 
-//app.use(cors(corsOption));
-app.use(multer({ storage: fileStorage }).single('file'));
-app.use('/main', mainRoutes);
+//   origin: ["http://localhost:5000", "http://localhost:3000"],
+//   optionsSuccessStatus: 200,
+//   methods: "GET,POST,PUT,DELETE",
+// };
+// app.use(cors(corsOption));
+
+
+
+const fileStorage = multer.diskStorage({
+    destination: (req, file, cb) => {
+        cb(null, 'audios');
+    
+    },
+    filename: (req, file, cb) => {
+        const date =  Date.now();
+        cb(null, date+ '-' + file.originalname)
+    }
+});
+const upload = multer({ storage: fileStorage });
+
+app.use(upload.single("file"));
+app.use(express.static(path.join(__dirname, "audios")));
+
+
+app.use('/main',mainRoutes);
 
 app.use((error, req, res, next) => {
   console.log(error.message);
