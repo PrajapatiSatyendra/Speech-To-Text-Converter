@@ -26,6 +26,7 @@ const Body = () => {
             setIsLoading(false);
             setIsRecording(false);
             setRecording(URL.createObjectURL(blob));
+          console.log(recording);
           
           const getTranscription = async () => {
             setIsLoadingAPI(true);
