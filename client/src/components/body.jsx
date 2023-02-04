@@ -23,14 +23,16 @@ const Body = () => {
        
         if (isRecording) {
             const blob = await recorder.stopRecording();
+     
             setIsLoading(false);
             setIsRecording(false);
-            setRecording(URL.createObjectURL(blob));
+          setRecording(URL.createObjectURL(blob));
+       
           
           const getTranscription = async () => {
             setIsLoadingAPI(true);
                 const form = new FormData();
-                form.append('file', blob, "yes.mp3");
+                form.append('file', blob, "audio.mp3");
                 try {
                     const result = await fetch(
                       "/main/transcriptionAndTranslation",

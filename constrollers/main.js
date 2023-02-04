@@ -3,6 +3,8 @@ const fetch = require('node-fetch');
 const fs = require('fs');
 const { translate } = require("free-translate");
 const path = require("path");
+const assemblyai = require("assemblyai");
+assemblyai.setAPIKey(process.env.ASSEMBLYAI_API_KEY);
 
 const urlUpload = "https://api.assemblyai.com/v2/upload";
 const urlTranscript = "https://api.assemblyai.com/v2/transcript";
@@ -12,24 +14,22 @@ exports.transcriptionAndTranslation = async (req, res, next) => {
   try {
   
     /*----------------------------------------Request for url of audio file from Assembly AI--------------------------------------------------- */
-    console.log("yes",req.file.path);
-    fs.readFile(req.file.path, async (error, data) => {
-      if (error) {
-        return next(error);
+      if (! req.file) {
+        throw new Error("Please upload file!");
       }
       const paramsUpload = {
         headers: {
           authorization: process.env.ASSEMBLYAI_API_KEY,
           "Transfer-Encoding": "chunked",
         },
-        body: data,
+        body: req.file.buffer,
         method: "POST",
       };
 
       const responseUpload = await fetch(urlUpload, paramsUpload);
       const jsonDataUpload = await responseUpload.json();
-      console.log(`Success: ${jsonDataUpload}`);
-      console.log(`URL: ${jsonDataUpload["upload_url"]}`);
+      // console.log(`Success: ${jsonDataUpload}`);
+      // console.log(`URL: ${jsonDataUpload["upload_url"]}`);
 
       /*-----------------------------------Request for transcription from Assembly AI ------------------------------------------------------*/
         
@@ -55,8 +55,8 @@ exports.transcriptionAndTranslation = async (req, res, next) => {
         throw new Error("something went wrong");
       }
       const jsonDataTranscript = await responseTranscript.json();
-      console.log("Success:", jsonDataTranscript);
-      console.log("ID:", jsonDataTranscript["id"]);
+      // console.log("Success:", jsonDataTranscript);
+      // console.log("ID:", jsonDataTranscript["id"]);
 
       /*----------------------------Requesting with download id from Assembly AI---------------------------------------------------------- */
         
@@ -79,16 +79,13 @@ exports.transcriptionAndTranslation = async (req, res, next) => {
       jsonDataDownloadId = await responseDownloadId.json();
       if (jsonDataDownloadId.status === "completed") {
         sourceText = jsonDataDownloadId.text;
-        console.log(sourceText);
          const translatedText = await translate(sourceText, { to: "hi" });
-
-         console.log(translatedText);
          res
            .status(200)
            .json({ sourceText: sourceText, translatedText: translatedText });
       }
       else {
-        let x = 0;
+   
         let timerId = setTimeout(async function getTranscript() {
           try {
               const responseDownloadId = await fetch(
@@ -105,7 +102,7 @@ exports.transcriptionAndTranslation = async (req, res, next) => {
                 const translatedText = await translate(sourceText, {
                   to: "hi",
                 });
-                console.log(x, translatedText);
+                // console.log( translatedText);
                 res
                   .status(200)
                   .json({
@@ -123,9 +120,6 @@ exports.transcriptionAndTranslation = async (req, res, next) => {
         }, 10000);
       }
 
-     
-        
-    });
       
   } catch (error) {
     next(error);

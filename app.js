@@ -18,27 +18,13 @@ app.use(express.json());
 // app.use(cors(corsOption));
 
 
-
-const fileStorage = multer.diskStorage({
-    destination: (req, file, cb) => {
-        cb(null, 'audios');
-    
-    },
-    filename: (req, file, cb) => {
-        const date =  Date.now();
-        cb(null, date+ '-' + file.originalname)
-    }
-});
-const upload = multer({ storage: fileStorage });
-
-app.use(upload.single("file"));
-app.use(express.static(path.join(__dirname, "audios")));
+app.use(multer().single("file"));
 
 
 app.use('/main',mainRoutes);
 
 app.use((error, req, res, next) => {
-  console.log(error.message);
+
   const status = error.statusCode || 500;
   if (error.statusCode === 500) {
     error.message;
