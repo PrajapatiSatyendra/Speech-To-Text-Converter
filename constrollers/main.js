@@ -13,9 +13,9 @@ exports.transcriptionAndTranslation = async (req, res, next) => {
   
     /*----------------------------------------Request for url of audio file from Assembly AI--------------------------------------------------- */
     
-    fs.readFile(path.join(__dirname,"../","audios","audio.mp3"), async (err, data) => {
-      if (err) {
-        return console.log(err);
+    fs.readFile(path.join(__dirname,"../","audios","audio.mp3"), async (error, data) => {
+      if (error) {
+        return next(error);
       }
       const paramsUpload = {
         headers: {
