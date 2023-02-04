@@ -15,7 +15,7 @@ exports.transcriptionAndTranslation = async (req, res, next) => {
     
     fs.readFile(path.join(__dirname,"../","audios","audio.mp3"),"r", async (err, data) => {
       if (err) {
-        console.log(err);
+        return res.status(500).json({message:`Hi, ${err}`})
       }
       const paramsUpload = {
         headers: {
