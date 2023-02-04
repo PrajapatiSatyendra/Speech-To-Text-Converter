@@ -5,7 +5,7 @@ const multer = require("multer");
 const path = require('path');
 
 const app=express();
-const PORT = 8000;
+const PORT = 5000;
 app.use(express.urlencoded({extended:false}));
 app.use(express.json());
 
