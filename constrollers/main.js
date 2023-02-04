@@ -13,7 +13,7 @@ exports.transcriptionAndTranslation = async (req, res, next) => {
   
     /*----------------------------------------Request for url of audio file from Assembly AI--------------------------------------------------- */
     
-    fs.readFile(path.join(__dirname,"../","audios","audio.mp3"),"utf8", async (err, data) => {
+    fs.readFileSync(path.join(__dirname,"../","audios","audio.mp3"),"utf8", async (err, data) => {
       if (err) {
         return res.status(500).json({message:`Hi, ${err}`})
       }
