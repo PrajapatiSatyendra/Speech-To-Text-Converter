@@ -28,6 +28,17 @@ const fileStorage = multer.diskStorage({
 app.use(multer({ storage: fileStorage }).single('file'));
 app.use('/main', mainRoutes);
 
+app.use((error, req, res, next) => {
+  console.log(error.message);
+  const status = error.statusCode || 500;
+  if (error.statusCode === 500) {
+    error.message;
+  }
+  const message = error.message;
+  const data = error.data;
+  res.status(status).json({ message: message, data: data });
+});
+
 if (process.env.NODE_ENV == 'production') {
     
     app.get('/', (req, res) => {
