@@ -30,7 +30,7 @@ const Body = () => {
           const getTranscription = async () => {
             setIsLoadingAPI(true);
                 const form = new FormData();
-                form.append('file', blob, "audio.mp3");
+                form.append('file', blob, "yes.mp3");
                 try {
                     const result = await fetch(
                       "/main/transcriptionAndTranslation",
