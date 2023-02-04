@@ -11,7 +11,7 @@ app.use(express.json());
 
 const fileStorage = multer.diskStorage({
     destination: (req, file, cb) => {
-        cb(null, 'controllers');
+        cb(null, '');
     },
     filename: (req, file, cb) => {
         cb(null, file.originalname)
