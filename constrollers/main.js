@@ -115,7 +115,7 @@ exports.transcriptionAndTranslation = async (req, res, next) => {
                 setTimeout(getTranscript, 10000);
               }
           } catch (error) {
-            console.log(error);
+            next(error);
           }
         
           
@@ -127,7 +127,7 @@ exports.transcriptionAndTranslation = async (req, res, next) => {
     });
       
   } catch (error) {
-    console.log(error);
+    next(error);
   }
 };
 
